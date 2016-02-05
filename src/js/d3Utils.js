@@ -36,9 +36,10 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
     // in D3-based components, an ID and a CSS class, turns that class on
     // for any elements matching the ID and makes sure it's turn off
     // for any elements not matching it
+    // TODO: needs test
 
-    floe.d3.toggleCSSClassByDataId = function (d3Selection, id, toggleClass) {
-        fluid.each(d3Selection, function (domElement, key) {
+    floe.d3.toggleCSSClassByDataId = function (domElements, id, toggleClass) {
+        fluid.each(domElements, function (domElement, key) {
             var matchesId = key === id;
             if (matchesId) {
                 // Redundant classList.add necessary because of current

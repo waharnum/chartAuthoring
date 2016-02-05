@@ -125,6 +125,7 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
     // stores references to the D3 DOM-bound elements in the modelPath, with
     // object constancy maintained by using the same ID-based keys as the
     // D3 DOM elements
+    // TODO: needs test
     floe.d3ViewComponent.storeD3ReferencesInModel = function (that, modelPath, d3Elements) {
         fluid.each(d3Elements[0], function (d3Element) {
             var key = floe.d3.idExtractor(d3Element.__data__);
