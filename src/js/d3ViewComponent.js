@@ -135,30 +135,60 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
         // that.applier.change(modelPath, d3Elements);
     };
 
-    // Given a set of ID-keyed DOM elements such as that stored in the model
-    // by storeD3ReferencesInModel, an ID, and a CSS class, turns that class on
-    // for the DOM element matching the ID and makes sure it's turned off
-    // for all the others
+    // TODO: needs explanation
     // TODO: needs test
-
-    floe.d3ViewComponent.toggleCSSClassByDataId = function (domElements, id, toggleClass) {
-        fluid.each(domElements, function (domElement, key) {
-            var matchesId = key === id;
-            if (matchesId) {
-                // Redundant classList.add necessary because of current
-                // Infusion version of jQuery limitations with SVG manipulation
-                // See http://stackoverflow.com/questions/8638621/jquery-svg-why-cant-i-addclass
-                domElement.classList.add(toggleClass);
-                $(domElement).addClass(toggleClass);
-
-            } else {
-                // Redundant classList.remove necessary because of current
-                // infusion jQuery limitaions with SVG
-                domElement.classList.remove(toggleClass);
-                $(domElement).removeClass(toggleClass);
-            }
-
+    floe.d3ViewComponent.locateDataboundElements = function(that, id, invertResult) {
+        var matchedElements = [];
+        var unmatchedElements = [];
+        fluid.each(that.model.d3ElementSelectors, function(elemSelector) {
+            var selector = that.locate(elemSelector);
+            fluid.each(selector, function(selectorItem) {
+                var matchesId = floe.d3.idExtractor(selectorItem.__data__) === id;
+                if(matchesId) {
+                    matchedElements.push(selectorItem);
+                } else {
+                    unmatchedElements.push(selectorItem);
+                }
+            });
         });
+        return invertResult ? unmatchedElements : matchedElements;
+    };
+
+    // TODO: needs explanation
+    // TODO: needs test outside of chartAuthoring context
+
+    floe.d3ViewComponent.toggleCSSClassByDataId = function (that, id, toggleClass) {
+        var matchedElements = floe.d3ViewComponent.locateDataboundElements(that, id);
+
+        var unmatchedElements = floe.d3ViewComponent.locateDataboundElements(that, id, true);
+
+        fluid.each(matchedElements, function(matchedElement) {
+            matchedElement.classList.add(toggleClass);
+            $(matchedElement).addClass(toggleClass);
+        });
+
+        fluid.each(unmatchedElements, function(unmatchedElement) {
+            unmatchedElement.classList.remove(toggleClass);
+            $(unmatchedElement).removeClass(toggleClass);
+        });
+
+        // fluid.each(domElements, function (domElement, key) {
+        //     var matchesId = key === id;
+        //     if (matchesId) {
+        //         // Redundant classList.add necessary because of current
+        //         // Infusion version of jQuery limitations with SVG manipulation
+        //         // See http://stackoverflow.com/questions/8638621/jquery-svg-why-cant-i-addclass
+        //         domElement.classList.add(toggleClass);
+        //         $(domElement).addClass(toggleClass);
+        //
+        //     } else {
+        //         // Redundant classList.remove necessary because of current
+        //         // infusion jQuery limitaions with SVG
+        //         domElement.classList.remove(toggleClass);
+        //         $(domElement).removeClass(toggleClass);
+        //     }
+        //
+        // });
     };
 
 })(jQuery, fluid);

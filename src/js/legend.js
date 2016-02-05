@@ -26,9 +26,7 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
             // 1. an array of objects. Must contain "id", "value" and "label" variables.
             // Example: [{id: string, value: number, label: string} ... ]
             dataSet: [],
-            d3Elements: {
-                legendRows: {}
-            }
+            d3ElementSelectors: ["row"]
             // Supplied by relaying in floe.chartAuthoring.totalRelaying grade
             // total: {
             //     value: number,
@@ -102,7 +100,7 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
             },
             activeRowId: {
                 func: "floe.d3ViewComponent.toggleCSSClassByDataId",
-                args: ["{that}.model.d3Elements.legendRows", "{that}.model.activeRowId", "{that}.options.styles.highlight"]
+                args: ["{that}", "{that}.model.activeRowId", "{that}.options.styles.highlight"]
             }
         },
         invokers: {
@@ -202,8 +200,6 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
 
         var tbody = table.selectAll("tbody");
 
-
-
         that.rows = tbody.selectAll("tr")
                             .data(dataSet, function (d) {
                                 return d.id;
@@ -218,8 +214,6 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
         if (sort) {
             that.rows.sort(that.sort);
         }
-
-        floe.d3ViewComponent.storeD3ReferencesInModel(that, "d3Elements.legendRows", that.rows);
 
         that.events.onLegendRedrawn.fire();
     };

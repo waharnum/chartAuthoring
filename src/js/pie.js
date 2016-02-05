@@ -30,10 +30,7 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
             dataSet: [],
             pieTitle: "Pie Chart",
             pieDescription: "A pie chart.",
-            d3Elements: {
-                pieSlices: {},
-                sliceTexts: {}
-            }
+            d3ElementSelectors: ["slice", "text"]
             // Supplied by relaying in floe.chartAuthoring.totalRelaying grade
             // total: {
             //     value: number,
@@ -101,11 +98,7 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
             },
             activeSliceId: [{
                 func: "floe.d3ViewComponent.toggleCSSClassByDataId",
-                args: ["{that}.model.d3Elements.pieSlices", "{that}.model.activeSliceId", "{that}.options.styles.highlight"]
-            },
-            {
-                func: "floe.d3ViewComponent.toggleCSSClassByDataId",
-                args: ["{that}.model.d3Elements.sliceTexts", "{that}.model.activeSliceId", "{that}.options.styles.highlight"]
+                args: ["{that}", "{that}.model.activeSliceId", "{that}.options.styles.highlight"]
             }]
         },
         invokers: {
@@ -201,10 +194,6 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
         floe.chartAuthoring.pieChart.pie.updateSlices(that);
 
         floe.chartAuthoring.pieChart.pie.removeSlices(that);
-
-        floe.d3ViewComponent.storeD3ReferencesInModel(that, "d3Elements.pieSlices", that.paths);
-
-        floe.d3ViewComponent.storeD3ReferencesInModel(that, "d3Elements.sliceTexts", that.texts);
 
         that.events.onPieRedrawn.fire();
     };
