@@ -32,32 +32,6 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
         return fluid.get(d, "id") || fluid.get(d, "data.id");
     };
 
-    // Given a set of ID-keyed DOM elements such as that tracked in model.d3Elements
-    // in D3-based components, an ID and a CSS class, turns that class on
-    // for any elements matching the ID and makes sure it's turn off
-    // for any elements not matching it
-    // TODO: needs test
-
-    floe.d3.toggleCSSClassByDataId = function (domElements, id, toggleClass) {
-        fluid.each(domElements, function (domElement, key) {
-            var matchesId = key === id;
-            if (matchesId) {
-                // Redundant classList.add necessary because of current
-                // Infusion version of jQuery limitations with SVG manipulation
-                // See http://stackoverflow.com/questions/8638621/jquery-svg-why-cant-i-addclass
-                domElement.classList.add(toggleClass);
-                $(domElement).addClass(toggleClass);
-
-            } else {
-                // Redundant classList.remove necessary because of current
-                // infusion jQuery limitaions with SVG
-                domElement.classList.remove(toggleClass);
-                $(domElement).removeClass(toggleClass);
-            }
-
-        });
-    };
-
     floe.d3.addD3Listeners = function (jQueryElem, eventName, listener, that) {
         var d3Elem = floe.d3.jQueryToD3(jQueryElem);
         d3Elem.on(eventName, function (data, i) {

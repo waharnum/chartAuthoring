@@ -99,7 +99,7 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
                 excludeSource: "init"
             },
             activeSliceId: {
-                func: "floe.d3.toggleCSSClassByDataId",
+                func: "floe.d3ViewComponent.toggleCSSClassByDataId",
                 args: ["{that}.model.d3Elements.pieSlices", "{that}.model.activeSliceId", "{that}.options.styles.highlight"]
             }
         },
