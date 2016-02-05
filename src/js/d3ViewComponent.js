@@ -137,7 +137,7 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
 
     // TODO: needs explanation
     // TODO: needs test
-    floe.d3ViewComponent.locateDataboundElements = function(that, id, invertResult) {
+    floe.d3ViewComponent.locateDataboundElementsByKey = function(that, id, invertResult) {
         var matchedElements = [];
         var unmatchedElements = [];
         fluid.each(that.model.d3ElementSelectors, function(elemSelector) {
@@ -158,9 +158,9 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
     // TODO: needs test outside of chartAuthoring context
 
     floe.d3ViewComponent.toggleCSSClassByDataId = function (that, id, toggleClass) {
-        var matchedElements = floe.d3ViewComponent.locateDataboundElements(that, id);
+        var matchedElements = floe.d3ViewComponent.locateDataboundElementsByKey(that, id);
 
-        var unmatchedElements = floe.d3ViewComponent.locateDataboundElements(that, id, true);
+        var unmatchedElements = floe.d3ViewComponent.locateDataboundElementsByKey(that, id, true);
 
         fluid.each(matchedElements, function(matchedElement) {
             matchedElement.classList.add(toggleClass);

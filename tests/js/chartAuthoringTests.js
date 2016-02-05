@@ -289,9 +289,9 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
 
     floe.tests.chartAuthoringTester.verifyPlayHighlighting = function (that, currentlyPlayingDataId, highlightClass) {
 
-        var matchedElements = floe.d3ViewComponent.locateDataboundElements(that, currentlyPlayingDataId);
+        var matchedElements = floe.d3ViewComponent.locateDataboundElementsByKey(that, currentlyPlayingDataId);
 
-        var unmatchedElements = floe.d3ViewComponent.locateDataboundElements(that, currentlyPlayingDataId, true);
+        var unmatchedElements = floe.d3ViewComponent.locateDataboundElementsByKey(that, currentlyPlayingDataId, true);
 
         fluid.each(matchedElements, function(matchedElement) {
                 jqUnit.assertTrue("Active elements contains the highlight class", matchedElement.classList.contains(highlightClass));
