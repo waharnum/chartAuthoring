@@ -102,11 +102,7 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
             },
             activeRowId: {
                 func: "floe.d3.toggleCSSClassByDataId",
-                args: ["{that}.rows", "{that}.model.activeRowId", "{that}.options.styles.highlight"]
-            },
-            d3Elements: {
-                func: "floe.chartAuthoring.pieChart.legend.logD3Elements",
-                args: ["{that}"]
+                args: ["{that}.model.d3Elements.legendRows", "{that}.model.activeRowId", "{that}.options.styles.highlight"]
             }
         },
         invokers: {
@@ -124,11 +120,6 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
             }
         }
     });
-
-    floe.chartAuthoring.pieChart.legend.logD3Elements = function (that) {
-        console.log("floe.chartAuthoring.pieChart.legend.logD3Elements");
-        console.log(that.model.d3Elements.legendRows);
-    };
 
     // Add new rows for new data, apply appropriate classes for selectors and styling
 

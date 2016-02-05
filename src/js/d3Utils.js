@@ -32,27 +32,29 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
         return fluid.get(d, "id") || fluid.get(d, "data.id");
     };
 
-    // Given a selection of D3 elements and an ID, returns only the elements
-    // matching that ID
-    floe.d3.filterByDataId = function (d3Selection, idToFilter, invertResult) {
-        var shouldInvert = invertResult === undefined ? false : invertResult;
-        return d3Selection.filter(
-            function (d) {
-                var id = floe.d3.idExtractor(d);
-                return shouldInvert ? id !== idToFilter : id === idToFilter;
-            }
-        );
-    };
-
-    // Given a selection of D3 elements, an ID and a CSS class, turns that
-    // class on for any elements matching the ID and makes sure it's turn off
+    // Given a set of ID-keyed DOM elements such as that tracked in model.d3Elements
+    // in D3-based components, an ID and a CSS class, turns that class on
+    // for any elements matching the ID and makes sure it's turn off
     // for any elements not matching it
-    // TODO: needs test coverage outside of overall chartAuthoring tests
+
     floe.d3.toggleCSSClassByDataId = function (d3Selection, id, toggleClass) {
-        var activeElement = floe.d3.filterByDataId(d3Selection, id);
-        var inactiveElements = floe.d3.filterByDataId(d3Selection, id, true);
-        activeElement.classed(toggleClass, true);
-        inactiveElements.classed(toggleClass, false);
+        fluid.each(d3Selection, function (domElement, key) {
+            var matchesId = key === id;
+            if (matchesId) {
+                // Redundant classList.add necessary because of current
+                // Infusion version of jQuery limitations with SVG manipulation
+                // See http://stackoverflow.com/questions/8638621/jquery-svg-why-cant-i-addclass
+                domElement.classList.add(toggleClass);
+                $(domElement).addClass(toggleClass);
+
+            } else {
+                // Redundant classList.remove necessary because of current
+                // infusion jQuery limitaions with SVG
+                domElement.classList.remove(toggleClass);
+                $(domElement).removeClass(toggleClass);
+            }
+
+        });
     };
 
     floe.d3.addD3Listeners = function (jQueryElem, eventName, listener, that) {

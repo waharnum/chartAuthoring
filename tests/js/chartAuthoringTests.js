@@ -94,7 +94,7 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
             name: "Test the chart authoring component",
             tests: [{
                 name: "Chart Authoring Init, Changes and Button Behaviour",
-                expect: 63,
+                expect: 69,
                 sequence: [{
                     listener: "floe.tests.chartAuthoringTester.verifyInit",
                     args: ["{chartAuthoring}"],
@@ -280,18 +280,19 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
         jqUnit.assertDeepEq("currentlyPlayingData is properly relayed between chartAuthoring component and sonifier subcomponent", that.chartAuthoringInterface.sonifier.model.currentlyPlayingData, that.model.currentlyPlayingData);
         jqUnit.assertDeepEq("activeRowId is the id of the currently playing data in the sonifier", that.chartAuthoringInterface.sonifier.model.currentlyPlayingData.id, that.chartAuthoringInterface.pieChart.legend.model.activeRowId);
         jqUnit.assertDeepEq("activeSliceId is the id of the currently playing data in the sonifier", that.chartAuthoringInterface.sonifier.model.currentlyPlayingData.id, that.chartAuthoringInterface.pieChart.pie.model.activeSliceId);
-        floe.tests.chartAuthoringTester.verifyPlayHighlighting(that.chartAuthoringInterface.pieChart.legend.rows, that.chartAuthoringInterface.pieChart.legend.model.activeRowId, that.chartAuthoringInterface.pieChart.legend.options.styles.highlight);
-        floe.tests.chartAuthoringTester.verifyPlayHighlighting(that.chartAuthoringInterface.pieChart.pie.paths, that.chartAuthoringInterface.pieChart.pie.model.activeSliceId, that.chartAuthoringInterface.pieChart.pie.options.styles.highlight);
+        floe.tests.chartAuthoringTester.verifyPlayHighlighting(that.chartAuthoringInterface.pieChart.legend.model.d3Elements.legendRows, that.chartAuthoringInterface.pieChart.legend.model.activeRowId, that.chartAuthoringInterface.pieChart.legend.options.styles.highlight);
+        floe.tests.chartAuthoringTester.verifyPlayHighlighting(that.chartAuthoringInterface.pieChart.pie.model.d3Elements.pieSlices, that.chartAuthoringInterface.pieChart.pie.model.activeSliceId, that.chartAuthoringInterface.pieChart.pie.options.styles.highlight);
     };
 
-    floe.tests.chartAuthoringTester.verifyPlayHighlighting = function (d3Selector, currentlyPlayingDataId, highlightClass) {
-        var activeElement = floe.d3.filterByDataId(d3Selector, currentlyPlayingDataId);
-        var activeElementClasses = activeElement.attr("class");
-        jqUnit.assertTrue("Active element contains the highlight class", activeElementClasses.indexOf(highlightClass) > -1);
-
-        var inactiveElements = floe.d3.filterByDataId(d3Selector, currentlyPlayingDataId, true);
-        var inActiveElementClasses = inactiveElements.attr("class");
-        jqUnit.assertFalse("Inactive elements do not contain the highlight class", inActiveElementClasses.indexOf(highlightClass) > -1);
+    floe.tests.chartAuthoringTester.verifyPlayHighlighting = function (domElements, currentlyPlayingDataId, highlightClass) {
+        fluid.each(domElements, function (domElement, key) {
+            var matchesId = key === currentlyPlayingDataId;
+            if (matchesId) {
+                jqUnit.assertTrue("Active element contains the highlight class", domElement.classList.contains(highlightClass));
+            } else {
+                jqUnit.assertFalse("Inactive elements do not contain the highlight class", domElement.classList.contains(highlightClass));
+            }
+        });
     };
 
     $(document).ready(function () {

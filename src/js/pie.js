@@ -29,7 +29,10 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
             // Example: [{id: string, value: number} ... ]
             dataSet: [],
             pieTitle: "Pie Chart",
-            pieDescription: "A pie chart."
+            pieDescription: "A pie chart.",
+            d3Elements: {
+                pieSlices: {}
+            }
             // Supplied by relaying in floe.chartAuthoring.totalRelaying grade
             // total: {
             //     value: number,
@@ -97,7 +100,7 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
             },
             activeSliceId: {
                 func: "floe.d3.toggleCSSClassByDataId",
-                args: ["{that}.paths", "{that}.model.activeSliceId", "{that}.options.styles.highlight"]
+                args: ["{that}.model.d3Elements.pieSlices", "{that}.model.activeSliceId", "{that}.options.styles.highlight"]
             }
         },
         invokers: {
@@ -193,6 +196,8 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
         floe.chartAuthoring.pieChart.pie.updateSlices(that);
 
         floe.chartAuthoring.pieChart.pie.removeSlices(that);
+
+        floe.d3ViewComponent.storeD3ReferencesInModel(that, "d3Elements.pieSlices", that.paths);
 
         that.events.onPieRedrawn.fire();
     };
