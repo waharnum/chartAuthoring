@@ -121,4 +121,14 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
         return output;
     };
 
+    // Given a fluid.modelComponent, a modelPath and a set of d3Elements,
+    // stores references to D3 elements in the modelPath
+    floe.d3ViewComponent.storeD3ReferencesInModel = function (that, modelPath, d3Elements) {
+        fluid.each(d3Elements[0], function (d3Element) {
+            var key = floe.d3.idExtractor(d3Element.__data__);
+            var d3ElementPath = modelPath + "." + key;
+            that.applier.change(d3ElementPath, d3Element);
+        });
+    };
+
 })(jQuery, fluid);

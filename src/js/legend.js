@@ -25,7 +25,10 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
             // dataSet accepts:
             // 1. an array of objects. Must contain "id", "value" and "label" variables.
             // Example: [{id: string, value: number, label: string} ... ]
-            dataSet: []
+            dataSet: [],
+            d3Elements: {
+                legendRows: {}
+            }
             // Supplied by relaying in floe.chartAuthoring.totalRelaying grade
             // total: {
             //     value: number,
@@ -100,6 +103,10 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
             activeRowId: {
                 func: "floe.d3.toggleCSSClassByDataId",
                 args: ["{that}.rows", "{that}.model.activeRowId", "{that}.options.styles.highlight"]
+            },
+            d3Elements: {
+                func: "floe.chartAuthoring.pieChart.legend.logD3Elements",
+                args: ["{that}"]
             }
         },
         invokers: {
@@ -117,6 +124,11 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
             }
         }
     });
+
+    floe.chartAuthoring.pieChart.legend.logD3Elements = function (that) {
+        console.log("floe.chartAuthoring.pieChart.legend.logD3Elements");
+        console.log(that.model.d3Elements.legendRows);
+    };
 
     // Add new rows for new data, apply appropriate classes for selectors and styling
 
@@ -199,6 +211,8 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
 
         var tbody = table.selectAll("tbody");
 
+
+
         that.rows = tbody.selectAll("tr")
                             .data(dataSet, function (d) {
                                 return d.id;
@@ -213,6 +227,8 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
         if (sort) {
             that.rows.sort(that.sort);
         }
+
+        floe.d3ViewComponent.storeD3ReferencesInModel(that, "d3Elements.legendRows", that.rows);
 
         that.events.onLegendRedrawn.fire();
     };
