@@ -49,6 +49,10 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
                 funcName: "floe.d3ViewComponent.removeElementIdFromDataKey",
                 args: ["{arguments}.0", "{arguments}.1", "{that}"]
             },
+            getElementsByDataKeys: {
+                funcName: "floe.d3ViewComponent.getElementsByDataKey",
+                args: ["{arguments}.0", "{that}"]
+            },
             getElementsByDataKey: {
                 funcName: "floe.d3ViewComponent.getElementsByDataKey",
                 args: ["{arguments}.0", "{that}"]
@@ -213,24 +217,43 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
         return floe.d3ViewComponent.getElementsByDataKeys(Object.keys(dataKeys), that);
     };
 
+    // Given an array of D3 data keys and a function `operation` matching the
+    // signature expected by jquery.each, applies that function to each element
+    // returned
+    floe.d3ViewComponent.operateOnElementsByDataKeys = function(dataKeys, operation, args, that, invert) {
+
+        var elementsToOperateOn = invert ? that.getElementsNotMatchingDataKey(dataKeys[0]) :  that.getElementsByDataKeys(dataKeys);
+        elementsToOperateOn.each(function(idx, element) {
+            var argsToApply = args.concat([idx, element]);
+            operation.apply(this, argsToApply);
+        });
+    };
+
+    floe.d3ViewComponent.logOperation = function(message, idx, element) {
+        console.log(message);
+        console.log(idx);
+        console.log(element);
+    };
+
+    // addClass that also handles SVG elements
+    floe.d3ViewComponent.addClassOperation = function(classToAdd, idx, element) {
+        $(element).addClass(classToAdd);
+        element.classList.add(classToAdd);
+    };
+
+    // removeClass that also handles SVG elements
+    floe.d3ViewComponent.removeClassOperation = function(classToRemove, idx, element) {
+        $(element).removeClass(classToRemove);
+        element.classList.remove(classToRemove);
+    };
+
     // Given a selection of D3 elements, an ID and a CSS class, turns that
     // class on for any elements matching the ID and makes sure it's turn off
     // for any elements not matching it
     floe.d3ViewComponent.toggleCSSClassByDataId = function (id, toggleClass, that) {
-        var associatedElements = floe.d3ViewComponent.getElementsByDataKey(id, that);
+        floe.d3ViewComponent.operateOnElementsByDataKeys([id], floe.d3ViewComponent.addClassOperation, [toggleClass], that);
 
-        associatedElements.addClass(toggleClass);
-        associatedElements.each(function (idx, elem) {
-            elem.classList.add(toggleClass);
-        });
-
-        var unassociatedElements = floe.d3ViewComponent.getElementsNotMatchingDataKey(id, that);
-
-        unassociatedElements.removeClass(toggleClass);
-        unassociatedElements.each(function (idx, elem) {
-            elem.classList.remove(toggleClass);
-        });
-
+        floe.d3ViewComponent.operateOnElementsByDataKeys([id], floe.d3ViewComponent.removeClassOperation, [toggleClass], that, true);
     };
 
 })(jQuery, fluid);
