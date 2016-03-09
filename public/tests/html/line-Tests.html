@@ -22,6 +22,8 @@
         <script src="../../src/js/line.js"></script>
         <script src="../js/lineTests.js"></script>
 
+
+
         <style>
         .floec-ca-lineChart-y-axis line {
           stroke: black;
@@ -58,6 +60,57 @@
 
         <h2>floec-ca-lineChart-multi</h2>
         <div class="floec-ca-lineChart-multi"></div>
+
+        <h2>First Discovery Server - Commits</h2>
+        <div class="floec-ca-lineChart-commits"></div>
+
+        <h2>First Discovery Server - Contributions</h2>
+        <div class="floec-ca-lineChart-contributions"></div>
+
+        <script>
+            createCommitsChart = function(data) {
+                var commitDataSet = fluid.transform(data.events.reverse(), function(dataPoint) {
+                    return {
+                        "date": dataPoint.timestamp,
+                        "value": dataPoint.value
+                    }
+                });
+                console.table(commitDataSet);
+                floe.tests.chartAuthoring.lineChart.chart(".floec-ca-lineChart-commits", {
+                    model: {
+                        dataSet: commitDataSet
+                    },
+                    lineOptions: {
+                        // interpolation: "cardinal",
+                        // addArea: true
+                    }
+                });
+            }
+
+            createContribsChart = function(data) {
+                var contribsDataSet = fluid.transform(data.events.reverse(), function(dataPoint) {
+                    return {
+                        "date": dataPoint.timestamp,
+                        "value": dataPoint.value
+                    }
+                });
+                console.table(contribsDataSet);
+                floe.tests.chartAuthoring.lineChart.chart(".floec-ca-lineChart-contributions", {
+                    model: {
+                        dataSet: contribsDataSet
+                    },
+                    lineOptions: {
+                        interpolation: "cardinal",
+                        addArea: true
+                    }
+                });
+            }
+
+        </script>
+
+        <script src="http://localhost:3000/a/fluid-project/infusion/commits?callback=createCommitsChart"></script>
+
+        <script src="http://localhost:3000/a/fluid-project/infusion/contributors?callback=createContribsChart"></script>
 
     </body>
 </html>

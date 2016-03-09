@@ -47,7 +47,8 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
             // Whether or not to add a point to each datapoint forming the line
             addPoints: false,
             pointRadius: 2,
-            // In milliseconds
+            // Transition length in milliseconds when the chart is redrawn on
+            // data change
             transitionLength: 2000
         },
         styles: {
