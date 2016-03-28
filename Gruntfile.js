@@ -25,9 +25,6 @@ module.exports = function (grunt) {
         }
     };
 
-    var d3License = licenseWrapper("D3", "src/lib/d3/LICENSE");
-    var flockingMITLicense = licenseWrapper("Flocking", "src/lib/flocking/MIT-LICENSE.txt");
-    var infusionLicense = licenseWrapper("Infusion", "src/lib/infusion/infusion-LICENSE.txt");
 
     // Project configuration.
     grunt.initConfig({
@@ -60,14 +57,14 @@ module.exports = function (grunt) {
             },
             d3WithLicense: {
                 options: {
-                    banner: d3License
+                    banner: licenseWrapper("D3", "src/lib/d3/LICENSE")
                 },
                 src: ["src/lib/d3/d3.min.js"],
                 dest: "dist/d3-with-license.js"
             },
             flockingWithLicense: {
                 options: {
-                    banner: flockingMITLicense
+                    banner: licenseWrapper("Flocking", "src/lib/flocking/MIT-LICENSE.txt")
                 },
                 src: ["src/lib/flocking/dist/flocking-base.js", "src/lib/flocking/src/ugens/oscillators.js", "src/lib/flocking/src/ugens/math.js",
                 "src/lib/flocking/src/ugens/envelopes.js",
@@ -77,7 +74,7 @@ module.exports = function (grunt) {
             },
             infusionWithLicense: {
                 options: {
-                    banner: infusionLicense
+                    banner: licenseWrapper("Infusion", "src/lib/infusion/infusion-LICENSE.txt")
                 },
                 src: ["src/lib/infusion/infusion-custom.js"],
                 dest: "dist/infusion-with-license.js"
