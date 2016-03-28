@@ -15,8 +15,16 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
 
     fluid.registerNamespace("floe.tests.chartAuthoring");
 
-    fluid.defaults("floe.tests.chartAuthoring.lineChart.timeSeries", {
-        gradeNames: ["floe.chartAuthoring.lineChart.timeSeries"],
+    fluid.defaults("floe.tests.chartAuthoring.lineChart.timeSeriesSingleDataSet", {
+        gradeNames: ["floe.chartAuthoring.lineChart.timeSeriesSingleDataSet"],
+        svgOptions: {
+            height: 400,
+            width: 800
+        }
+    });
+
+    fluid.defaults("floe.tests.chartAuthoring.lineChart.timeSeriesMultiDataSet", {
+        gradeNames: ["floe.chartAuthoring.lineChart.timeSeriesMultiDataSet"],
         svgOptions: {
             height: 400,
             width: 800
@@ -461,8 +469,6 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
 
     floe.tests.chartAuthoring.validateLine = function (that, expectedDataSet) {
 
-        expectedDataSet = floe.chartAuthoring.lineChart.timeSeries.wrapSingleDataSet(expectedDataSet);
-
         // Test that the chart line is created
 
         var chartLines = that.locate("chartLine");
@@ -522,7 +528,7 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
         jqUnit.assertNotEquals("The chart area element is created with the proper selector", 0, chartLineAreas.length);
 
         fluid.each(chartLineAreas, function (chartLineArea, idx) {
-            floe.tests.chartAuthoring.validateBoundData(chartLineArea, that.model.wrappedDataSet[idx].data);
+            floe.tests.chartAuthoring.validateBoundData(chartLineArea, that.model.dataSet[idx].data);
         });
     };
 
@@ -533,7 +539,7 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
 
         fluid.each(chartLinePointGroups, function (chartLinePointGroup, idx) {
             var chartLinePointElements = $(chartLinePointGroup).children("circle");
-            fluid.each(that.model.wrappedDataSet[idx].data, function (dataPoint, idx) {
+            fluid.each(that.model.dataSet[idx].data, function (dataPoint, idx) {
                 jqUnit.assertDeepEq("dataPoint from dataSet at position " + idx + " has a matching object in the line's bound data", dataPoint, chartLinePointElements[idx].__data__);
             });
         });
@@ -541,22 +547,22 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
 
     jqUnit.test("Test line chart creation and response to changed data", function () {
         jqUnit.expect(68);
-        var that = floe.tests.chartAuthoring.lineChart.timeSeries(".floec-ca-lineChart", {
+        var that = floe.tests.chartAuthoring.lineChart.timeSeriesSingleDataSet(".floec-ca-lineChart", {
             model: {
                 dataSet: floe.tests.chartAuthoring.timeSeriesData1
             }
         });
 
-        floe.tests.chartAuthoring.validateLineChart(that, that.model.wrappedDataSet);
+        floe.tests.chartAuthoring.validateLineChart(that, that.model.dataSet);
 
         that.applier.change("dataSet", floe.tests.chartAuthoring.timeSeriesData2);
 
-        floe.tests.chartAuthoring.validateLineChart(that, that.model.wrappedDataSet);
+        floe.tests.chartAuthoring.validateLineChart(that, that.model.dataSet);
     });
 
     jqUnit.test("Test line chart creation with area and data points enabled", function () {
         jqUnit.expect(178);
-        var that = floe.tests.chartAuthoring.lineChart.timeSeries(".floec-ca-lineChart-area", {
+        var that = floe.tests.chartAuthoring.lineChart.timeSeriesSingleDataSet(".floec-ca-lineChart-area", {
             gradeNames: [
                 "floe.chartAuthoring.lineChart.timeSeries.area", "floe.chartAuthoring.lineChart.timeSeries.points"
             ],
@@ -569,7 +575,7 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
             }
         });
 
-        floe.tests.chartAuthoring.validateLineChart(that, that.model.wrappedDataSet);
+        floe.tests.chartAuthoring.validateLineChart(that, that.model.dataSet);
 
         floe.tests.chartAuthoring.validateLineChartArea(that);
 
@@ -577,7 +583,7 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
 
         that.applier.change("dataSet", floe.tests.chartAuthoring.timeSeriesData2);
 
-        floe.tests.chartAuthoring.validateLineChart(that, that.model.wrappedDataSet);
+        floe.tests.chartAuthoring.validateLineChart(that, that.model.dataSet);
 
         floe.tests.chartAuthoring.validateLineChartArea(that);
 
@@ -587,7 +593,7 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
 
     jqUnit.test("Test line chart with multiple lines", function () {
         jqUnit.expect(170);
-        var that = floe.tests.chartAuthoring.lineChart.timeSeries(".floec-ca-lineChart-multi", {
+        var that = floe.tests.chartAuthoring.lineChart.timeSeriesMultiDataSet(".floec-ca-lineChart-multi", {
             gradeNames: [
                 "floe.chartAuthoring.lineChart.timeSeries.area",
                 "floe.chartAuthoring.lineChart.timeSeries.points"
@@ -600,7 +606,7 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
             }
         });
 
-        floe.tests.chartAuthoring.validateLineChart(that, that.model.wrappedDataSet);
+        floe.tests.chartAuthoring.validateLineChart(that, that.model.dataSet);
 
         floe.tests.chartAuthoring.validateLineChartArea(that);
 
