@@ -7,14 +7,7 @@
   "homepage": "http://www.fluidproject.org/",
   "dependencies": {
       "d3":"latest",
-      "flocking":"https://github.com/colinbdclark/Flocking",
-      "grunt": "~0.4.5",
-      "grunt-contrib-jshint": "~0.9.0",
-      "grunt-contrib-concat": "latest",
-      "grunt-contrib-clean": "latest",
-      "grunt-contrib-uglify": "latest",
-      "grunt-jsonlint": "1.0.4",
-      "grunt-contrib-copy": "latest"
+      "flocking":"https://github.com/colinbdclark/Flocking"
   },
   "licenses": [
     {
@@ -39,6 +32,15 @@
   "engines": {
     "node": ">=0.10.0"
   },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.9.0",
+    "grunt-contrib-concat": "latest",
+    "grunt-contrib-clean": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-jsonlint": "1.0.4",
+    "grunt-contrib-copy": "latest"
+},
 "scripts": {
     "install": "grunt copy:frontEndDependencies && grunt dist"
 }
