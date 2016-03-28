@@ -16,7 +16,13 @@ module.exports = function (grunt) {
     "use strict";
 
     var licenseWrapper = function (libraryName, licenseFilePath) {
-        return "/* " + libraryName + "\n" + grunt.file.read(licenseFilePath) + "*/\n";
+        try {
+            return "/* " + libraryName + "\n" + grunt.file.read(licenseFilePath) + "*/\n";
+        }
+        // Return a null value if the license file doesn't exist
+        catch (e) {
+            return null;
+        }
     };
 
     var d3License = licenseWrapper("D3", "src/lib/d3/LICENSE");

@@ -40,5 +40,8 @@
     "grunt-contrib-uglify": "latest",
     "grunt-jsonlint": "1.0.4",
     "grunt-contrib-copy": "latest"
-  }
+},
+"scripts": {
+    "install": "grunt copy:frontEndDependencies && grunt dist"
+}
 }
