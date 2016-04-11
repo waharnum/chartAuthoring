@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../src/lib/infusion/src/lib/normalize/css/normalize.css" />
+        <link rel="stylesheet" type="text/css" href="../src/lib/infusion/src/framework/core/css/fluid.css" />
+        <link rel="stylesheet" type="text/css" href="../src/lib/infusion/src/components/overviewPanel/css/OverviewPanel.css" />
+        <link rel="stylesheet" type="text/css" href="../src/lib/infusion/src/components/inlineEdit/css/InlineEdit.css" />
+
+        <script type="text/javascript" src="../src/lib/infusion/infusion-custom.js"></script>
+        <script type="text/javascript" src="../src/lib/d3/d3.js"></script>
+
+        <script type="text/javascript" src="../src/lib/flocking/flocking-base.js"></script>
+        <script type="text/javascript" src="../src/lib/flocking/ugens/oscillators.js"></script>
+        <script type="text/javascript" src="../src/lib/flocking/ugens/math.js"></script>
+        <script type="text/javascript" src="../src/lib/flocking/ugens/envelopes.js"></script>
+        <script type="text/javascript" src="../src/lib/flocking/ugens/midi.js"></script>
+        <script type="text/javascript" src="../src/lib/flocking/ugens/scheduling.js"></script>
+
+        <script type="text/javascript" src="../src/js/valueBinding.js"></script>
+        <script type="text/javascript" src="../src/js/percentage.js"></script>
+        <script type="text/javascript" src="../src/js/transformations.js"></script>
+        <script type="text/javascript" src="../src/js/templateInjection.js"></script>
+        <script type="text/javascript" src="../src/js/d3ViewComponent.js"></script>
+        <script type="text/javascript" src="../src/js/totalRelaying.js"></script>
+        <script type="text/javascript" src="../src/js/legend.js"></script>
+        <script type="text/javascript" src="../src/js/pie.js"></script>
+        <script type="text/javascript" src="../src/js/pieChart.js"></script>
+        <script type="text/javascript" src="../src/js/d3Utils.js"></script>
+        <script type="text/javascript" src="../src/js/utils.js"></script>
+        <script type="text/javascript" src="../src/js/dataEntry.js"></script>
+        <script type="text/javascript" src="../src/js/dataEntryPanel.js"></script>
+        <script type="text/javascript" src="../src/js/electricPianoBand.js"></script>
+        <script type="text/javascript" src="../src/js/unitDivisorSonificationStrategy.js"></script>
+        <script type="text/javascript"
+        <script type="text/javascript" src="../src/js/sonifier.js"></script>
+        <script type="text/javascript" src="../src/js/chartAuthoring.js"></script>
+
+        <script type="text/javascript" src="src/js/chartAuthoring-userTest.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="src/css/chartAuthoring-userTest.css" />
+
+
+        <title>Chart Authoring Tool</title>
+    </head>
+
+    <body>
+
+            <div class="floe-chartAuthoring-container">
+
+                <h1 class="floe-chartAuthoring-userTest-heading">Sonification #1</h1>
+                <div id="floec-chartAuthoring-userTest-sonification1"></div>
+
+                <h1 class="floe-chartAuthoring-userTest-heading">Sonification #2</h1>
+                <div id="floec-chartAuthoring-userTest-sonification2"></div>
+
+                <script type="text/javascript">
+
+                    floe.chartAuthoring.userTestDefault("#floec-chartAuthoring-userTest-sonification1");
+
+                    floe.chartAuthoring.userTestContinuous("#floec-chartAuthoring-userTest-sonification2");
+
+                    </script>
+            </div>
+
+    </body>
+</html>
