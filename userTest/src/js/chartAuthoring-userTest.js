@@ -43,8 +43,8 @@
                                 }
                             },
                             values: {
-                                divisorReturnValue: 91,
-                                remainderReturnValue: 91
+                                divisorReturnValue: 74,
+                                remainderReturnValue: 74
                             }
                         },
                         envelope: {
