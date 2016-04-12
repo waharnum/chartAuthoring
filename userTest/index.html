@@ -49,30 +49,57 @@
 
             <div class="floe-chartAuthoring-container">
 
-                <h1 class="floe-chartAuthoring-userTest-heading">Sonification #1</h1>
-                <div id="floec-chartAuthoring-userTest-sonification1"></div>
+                <div class="floe-chartAuthoring-userTest-sonifications">
+                <div class="floec-chartAuthoring-userTest-sonificationContainer">
+                    <h1 class="floe-chartAuthoring-userTest-heading">Sonification #1</h1>
+                    <div id="floec-chartAuthoring-userTest-sonification1"></div>
+                </div>
 
+                <div class="floec-chartAuthoring-userTest-sonificationContainer">
                 <h1 class="floe-chartAuthoring-userTest-heading">Sonification #2</h1>
                 <div id="floec-chartAuthoring-userTest-sonification2"></div>
+            </div>
 
+                <div class="floec-chartAuthoring-userTest-sonificationContainer">
                 <h1 class="floe-chartAuthoring-userTest-heading">Sonification #3</h1>
                 <div id="floec-chartAuthoring-userTest-sonification3">
                     <audio src="assets/sonification_percussive_integrated_legend.mp3" controls></audio>
                 </div>
+            </div>
 
+            <div class="floec-chartAuthoring-userTest-sonificationContainer">
                 <h1 class="floe-chartAuthoring-userTest-heading">Sonification #4</h1>
                 <div id="floec-chartAuthoring-userTest-sonification4">
                     <audio src="assets/sonification_percussive_R_justify_with_legend.mp3" controls></audio>
                 </div>
-
-                <script type="text/javascript">
-
-                    floe.chartAuthoring.userTestDefault("#floec-chartAuthoring-userTest-sonification1");
-
-                    floe.chartAuthoring.userTestContinuous("#floec-chartAuthoring-userTest-sonification2");
-
-                    </script>
             </div>
+
+        </div>
+
+            <h1>Randomized Play Order for This Set</h1>
+                            <ul class="floec-chartAuthoring-userTest-sonificationOrder">
+
+                            </ul>
+
+            </div>
+
+
+
+
+            <script type="text/javascript">
+
+                floe.chartAuthoring.userTestDefault("#floec-chartAuthoring-userTest-sonification1");
+
+                floe.chartAuthoring.userTestContinuous("#floec-chartAuthoring-userTest-sonification2");
+
+                $(".floe-chartAuthoring-userTest-sonifications").randomize(".floec-chartAuthoring-userTest-sonificationContainer");
+
+                $(".floe-chartAuthoring-userTest-heading").each(function () {
+                    var current = $(this);
+                    $("<li>").text(current.text()).appendTo(".floec-chartAuthoring-userTest-sonificationOrder");
+                });
+
+                </script>
 
     </body>
 </html>
