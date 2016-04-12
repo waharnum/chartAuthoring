@@ -42,7 +42,7 @@
         <link rel="stylesheet" type="text/css" href="src/css/chartAuthoring-userTest.css" />
 
 
-        <title>Chart Authoring Tool</title>
+        <title>Sonification User Testing</title>
     </head>
 
     <body>
@@ -76,7 +76,8 @@
 
         </div>
 
-            <h1>Randomized Play Order for This Set</h1>
+        <hr />
+            <h2 class="floe-chartAuthoring-userTest-heading">Randomized Play Order for This Set</h2>
                             <ul class="floec-chartAuthoring-userTest-sonificationOrder">
 
                             </ul>
@@ -94,7 +95,7 @@
 
                 $(".floe-chartAuthoring-userTest-sonifications").randomize(".floec-chartAuthoring-userTest-sonificationContainer");
 
-                $(".floe-chartAuthoring-userTest-heading").each(function () {
+                $(".floe-chartAuthoring-userTest-sonifications .floe-chartAuthoring-userTest-heading").each(function () {
                     var current = $(this);
                     $("<li>").text(current.text()).appendTo(".floec-chartAuthoring-userTest-sonificationOrder");
                 });
