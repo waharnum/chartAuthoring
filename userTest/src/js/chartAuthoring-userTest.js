@@ -28,8 +28,9 @@
     }];
 
     fluid.defaults("floe.chartAuthoring.userTest.sonifier.unitDivisorSonificationStrategyContinuous", {
-        // can override these to control sonification behaviour
-        // These need better explanations of what they do
+        model: {
+            dataSetVoiceLabel: "Canadian Smartphone Market Share 2015"
+        },
         sonificationOptions: {
             strategies: {
                 unitDivisor: {
@@ -80,6 +81,21 @@
         templateLoader: {
             terms: {
                 templatePrefix: "../src/html"
+            }
+        },
+        components: {
+            chartAuthoringInterface: {
+                options: {
+                    components: {
+                        sonifier: {
+                            options: {
+                                model: {
+                                    dataSetVoiceLabel: "Canadian Smartphone Market Share 2015"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         initialData: smartPhoneData

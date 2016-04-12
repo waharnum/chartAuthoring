@@ -59,7 +59,8 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
                 expander: {
                     func: "fluid.textToSpeech.isSupported"
                 }
-            }
+            },
+            dataSetVoiceLabel: "Begin Sonification"
         },
         modelListeners: {
             dataSet: {
@@ -144,7 +145,7 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
     // when a sonification completes
     // - we can fire an event when a voice label read completes, but can't know
     // in advance how long it will take to read the label
-    floe.chartAuthoring.sonifier.processSonificationQueue = function (delay, noGap, that) {
+    floe.chartAuthoring.sonifier.processSonificationQueue = function (delay, isFirst, that) {
         var sonificationQueue = that.model.sonificationQueue;
         if (sonificationQueue.length === 0) {
             return;
@@ -152,8 +153,12 @@ https://raw.githubusercontent.com/fluid-project/chartAuthoring/master/LICENSE.tx
         that.applier.change("isPlaying", true);
         var gapDuration = that.options.playbackOptions.gapDuration;
 
+        if (isFirst) {
+            that.textToSpeech.queueSpeech(that.model.dataSetVoiceLabel);
+        }
+
         // We shouldn't use the gap if this is the first call for a dataset
-        var pause = noGap ? delay : delay + gapDuration;
+        var pause = isFirst ? delay : delay + gapDuration;
 
         floe.chartAuthoring.sonifier.scheduleNextPlayData(pause, that);
     };
