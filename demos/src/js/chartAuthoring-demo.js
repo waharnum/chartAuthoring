@@ -20,8 +20,47 @@ Varied#3: colors: ["#f15e4e", "#acdee4", "#73c163", "#ffc74a", "#41beae"]
 
     fluid.registerNamespace("floe.chartAuthoring.demo");
 
+    fluid.defaults("floe.chartAuthoring.demo.speechRecognitionControls", {
+            gradeNames: ["floe.speechRecognitionEventController", "floe.speechRecognitionConsoleLogger"],
+        events: {
+            onPlaySpoken: null,
+            onStopSpoken: null
+        },
+        speechToEvents: {
+            "play": "{that}.events.onPlaySpoken",
+            "stop": "{that}.events.onStopSpoken"
+        },
+        listeners: {
+            "onPlaySpoken.log": {
+                "this": "console",
+                "method": "log",
+                "args": "'onPlaySpoken' event was fired!"
+            },
+            "onStopSpoken.log": {
+                "this": "console",
+                "method": "log",
+                "args": "'onStopSpoken' event was fired!"
+            }
+        }
+
+    });
+
     fluid.defaults("floe.chartAuthoring.demo", {
         gradeNames: ["floe.chartAuthoring"],
+        components: {
+            speechRecognitionControls: {
+                type: "floe.chartAuthoring.demo.speechRecognitionControls",
+                createOnEvent: "onToolReady",
+                options: {
+                    listeners: {
+                        "onPlaySpoken.playSonification":
+                        "{chartAuthoringInterface}.sonifier.events.onSonificationRequested.fire",
+                        "onStopSpoken.stopSonification":
+                        "{chartAuthoringInterface}.sonifier.stopSonification"
+                    }
+                }
+            }
+        },
         listeners: {
             "onToolReady.addExampleInput": {
                 funcName: "{that}.updateDataEntryPanelFromDataSet",
